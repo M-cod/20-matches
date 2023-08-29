@@ -1,39 +1,32 @@
 package com.company.service;
 
-import java.util.Scanner;
-
 public class GameControlService {
     private int totalNumberOfMatches = 20;
+    private int playerNumber = 1;
     private final ComputerLogicService computerLogicService = new ComputerLogicService();
     private final TextServiceImpl textService = new TextServiceImpl();
+    private final PlayerService playerService = new PlayerService();
 
     public void beginningOfTheGame() {
-        while(totalNumberOfMatches != 1){
-
-        }
-        textService.numberOfMatchesOnTheTable(totalNumberOfMatches);
-        textService.computerMove(3);
-        totalNumberOfMatches -= 3;
-        textService.numberOfMatchesOnTheTable(totalNumberOfMatches);
-        remove(playersTurn());
-        textService.numberOfMatchesOnTheTable(totalNumberOfMatches);
-        remove(computerLogicService.computerMove());
-        textService.numberOfMatchesOnTheTable(totalNumberOfMatches);
-
-    }
-
-
-
-    public int playersTurn() {
-        do {
-            Scanner scanner = new Scanner(System.in);
-            textService.playerMove();
-            int numberOfMatches = scanner.nextInt();
-            if (numberOfMatches > 0 && numberOfMatches < 4) {
-                return numberOfMatches;
+        boolean flag = true;
+        while (totalNumberOfMatches != 1) {
+            textService.numberOfMatchesOnTheTable(totalNumberOfMatches);
+            if (flag){
+                int computerNumber = computerLogicService.computerMove(playerNumber);
+                textService.computerMove(computerNumber);
+                remove(computerNumber);
+                flag = false;
+            } else {
+                playerNumber = playerService.playersTurn();
+                remove(playerNumber);
+                flag = true;
             }
-            textService.incorrectNumberOfMatches();
-        } while (true);
+        }
+        if (flag){
+            textService.computerLost();
+        } else {
+            textService.playerLost();
+        }
     }
 
     public void remove(int numberOfMatches) {

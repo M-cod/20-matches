@@ -2,7 +2,7 @@ package com.company.service;
 
 public class ComputerLogicService {
 
-    public int computerMove(){
-        return 0;
+    public int computerMove(int playerNumber){
+        return 4 - playerNumber;
     }
 }

@@ -3,7 +3,7 @@ package com.company.service;
 public class TextServiceImpl implements TextService {
     @Override
     public void playerMove() {
-        System.out.println(" - Ход игрока. Введите количество спичек: ");
+        System.out.print(" - Ход игрока. Введите количество спичек: ");
     }
 
     @Override
